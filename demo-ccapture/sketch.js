@@ -1,16 +1,4 @@
 
-P5Capture.setDefaultOptions({
-  format: "mp4",
-  framerate: 30,
-  //quality: 1.0,
-  bitrate: 3500,
-  width: 500,
-  height: 500,
-  verbose: true,
-  disableScaling: true,
-  disableUi: true,
-});
-
 const WAVY = ( s ) => 
 {
   let theShader;
@@ -51,7 +39,7 @@ const WAVY = ( s ) =>
     zoom = 0.45;
     offset.x = 50;
 
-    console.log(canvas.drawingContext.getContextAttributes());
+    //console.log(canvas.drawingContext.getContextAttributes());
   }
 
   s.draw = () => 
@@ -84,6 +72,35 @@ const WAVY = ( s ) =>
   }
 }
 
+ // Create a new ffmpeg.wasm instance
+ var ffmpeg = new FFmpeg();
 
+ // Create a new video encoder
+ var encoder = ffmpeg.createEncoder("libx264");
+
+ // Set the video encoder options
+ encoder.set("fps", 30);
+ encoder.set("video_size", "500x500");
+
+ // Create a variable to store the recording state
+ var recording = false;
+
+ // Start recording the video when the startRecordingButton is clicked
+ document.getElementById("startRecordingButton").addEventListener("click", function() {
+   recording = true;
+   encoder.startRecording("output.mp4");
+ });
+
+ // Stop recording the video when the stopRecordingButton is clicked
+ document.getElementById("stopRecordingButton").addEventListener("click", function() {
+   recording = false;
+   encoder.stopRecording();
+ });
+
+ // Render the video to the canvas
+ ffmpeg.on("frame", function(frame) {
+   var ctx = canvas.getContext("2d");
+   ctx.drawImage(frame, 0, 0);
+ });
 
 let thep5 = new p5(WAVY, 'wavySketch');
