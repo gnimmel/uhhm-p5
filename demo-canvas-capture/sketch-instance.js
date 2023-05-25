@@ -11,6 +11,7 @@ const sketch = ( p ) =>
   let displayWidth = 1080;
   let displayHeight = 1080;
 
+  // GUI
   let gui;
   let params = {
     textTop: "TRAP",
@@ -23,7 +24,7 @@ const sketch = ( p ) =>
     speedMax: 1.0,
     speedStep: 0.001,
 
-    zoom: 0.45,
+    zoom: 0.15,
     zoomMin: 0.01,
     zoomMax: 1.0,
     zoomStep: 0.001,
@@ -48,7 +49,7 @@ const sketch = ( p ) =>
 
   p.setup = () => 
   {
-    p.frameRate(60);
+    p.frameRate(30);
     p.pixelDensity(intPixDensity);
     p.createCanvas(displayWidth, displayHeight, p.WEBGL);
     p.background(0);
@@ -106,8 +107,8 @@ const sketch = ( p ) =>
   {
     CanvasCapture.init(p.canvas, {
       showRecDot: true,
-      showAlerts: true,
-      showDialogs: true,
+      showAlerts: false,
+      showDialogs: false,
       verbose: true,
       ffmpegCorePath: '../ffmpeg/ffmpeg-core.js',
     });
