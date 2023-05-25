@@ -8,8 +8,6 @@ body {
 	align-items: center;
 }
 
-
-
 canvas {
 	object-fit: contain;
 	width: 100% !important;
