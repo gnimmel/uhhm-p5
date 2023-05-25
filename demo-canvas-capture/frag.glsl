@@ -10,6 +10,9 @@ uniform vec2 u_mouse;
 uniform vec2 u_offset;
 uniform float u_zoom;
 uniform sampler2D u_text;
+uniform vec3 u_color1;
+uniform vec3 u_color2;
+uniform vec3 u_color3;
 
 float rand(vec2 co){
   return fract(sin(dot(co.xy,vec2(12.9898,78.233))) * 43758.5453);
@@ -58,14 +61,14 @@ void main() {
 	float text = texture2D(u_text, t_uv).r;
 	
 	c = clamp(0., 1., c);
-  vec3 col = vec3(c);
+  	vec3 col = vec3(c);
 	
-	vec3 color1 = vec3(20, .50, .1000);
-	vec3 color2 = vec3(.88, .80, .94);
-	vec3 color3 = vec3(.0, .22, .77);
+	//vec3 color1 = vec3(0.92, 0.36, 0.01);
+	//vec3 color2 = vec3(.88, .80, .94);
+	//vec3 color3 = vec3(.0, .22, .77);
 	
-	col = mix(color1, color3, c);
-	col = mix(col, color2, text);
+	col = mix(u_color1, u_color3, c);
+	col = mix(col, u_color2, text);
   
   gl_FragColor = vec4(col,1.0); 
 }

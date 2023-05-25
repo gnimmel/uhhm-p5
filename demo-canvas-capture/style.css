@@ -8,9 +8,7 @@ body {
 	align-items: center;
 }
 
-main {
-	height: 100%;
-}
+
 
 canvas {
 	object-fit: contain;
@@ -31,3 +29,8 @@ canvas {
     padding: 20px;
 	vertical-align: top;
 }
+
+#wavy-sketch {
+	width: 50%;
+	height: 50%;
+  }
