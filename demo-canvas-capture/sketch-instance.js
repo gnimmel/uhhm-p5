@@ -1,15 +1,42 @@
 const sketch = ( p ) => 
 {
   let theShader;
-  let canvas;
+  //let canvas;
   let f;
   let textGraphic;
 
-  let zoom = 1;
+  //let zoom = 1;
   let offset;
   let intPixDensity = 1;
-  let displayWidth = 500;
-  let displayHeight = 500;
+  let displayWidth = 1080;
+  let displayHeight = 1080;
+
+  let gui;
+  let params = {
+    textTop: "TRAP",
+    textBtm: "BANGER",
+    color1: [255, 0, 0],
+    color3: [0, 0, 255],
+    
+    speed: 0.7,
+    speedMin: 0.01,
+    speedMax: 1.0,
+    speedStep: 0.001,
+
+    zoom: 0.45,
+    zoomMin: 0.01,
+    zoomMax: 1.0,
+    zoomStep: 0.001,
+
+    textColor: [201, 255, 5],
+    textScale: 1.0,
+    textScaleMin: 0.2,
+    textScaleMax: 1.8,
+    textScaleStep: 0.001
+  };
+
+  //let textTop = "ALLIGATOR"
+  //let textBtm = "BANGER"
 
   const { CanvasCapture } = CanvasCaptureLib;
 
@@ -31,15 +58,52 @@ const sketch = ( p ) =>
     textGraphic.pixelDensity(intPixDensity);
     textGraphic.background(0);
     textGraphic.textFont(f);
-    textGraphic.textSize(Math.round(displayWidth*0.14));
+    textGraphic.textSize(Math.round(displayWidth * 0.14) * params.textScale);
     textGraphic.textAlign(p.CENTER, p.CENTER);
     textGraphic.fill("#ffffff");
-    textGraphic.text("TRAP", Math.round(displayWidth*0.1), -(Math.round(displayHeight*0.12)));
-    textGraphic.text("BANGER", Math.round(displayWidth*0.1), Math.round(displayHeight*0.05));
+    textGraphic.text(params.textTop, Math.round(displayWidth*0.1), -(Math.round(displayHeight*0.12 * params.textScale)));
+    textGraphic.text(params.textBtm, Math.round(displayWidth*0.1), Math.round(displayHeight*0.05 * params.textScale));
     
-    zoom = 0.45;
+    //zoom = 0.15;
     offset.x = 50;
 
+    p.initCapture()
+    
+    gui = p.createGui(p);
+    gui.addObject(params);
+    gui.setPosition((displayWidth + 50) * .5, 25);
+  }
+
+  p.draw = () => 
+  {
+    textGraphic.background(0);
+    textGraphic.textSize(Math.round(displayWidth*0.14) * params.textScale);
+    textGraphic.text(params.textTop, Math.round(displayWidth*0.1), -(Math.round(displayHeight*0.12 * params.textScale)));
+    textGraphic.text(params.textBtm, Math.round(displayWidth*0.1), Math.round(displayHeight*0.05 * params.textScale));
+
+    var y = (p.mouseY-(displayHeight/intPixDensity)) / p.min(1, p.windowWidth / p.windowHeight) + (displayHeight/intPixDensity);
+    var py = (p.pmouseY-(displayHeight/intPixDensity)) / p.min(1, p.windowWidth / p.windowHeight) + (displayHeight/intPixDensity);
+    
+    theShader.setUniform("u_resolution", [p.width * intPixDensity, p.height * intPixDensity]);
+    theShader.setUniform("u_time", p.millis() / (1500.0*(1-params.speed)+100));
+    theShader.setUniform("u_offset", [-offset.x * intPixDensity, offset.y * intPixDensity]);
+    theShader.setUniform("u_zoom", 1.0 / params.zoom);
+    theShader.setUniform("u_mouse", [p.mouseX * intPixDensity, (p.height-y) * intPixDensity]);
+    theShader.setUniform("u_text", textGraphic);
+    theShader.setUniform("u_color1", [ p.red(p.color(params.color1))/100, p.green(p.color(params.color1))/100, p.blue(p.color(params.color1))/100 ]);
+    theShader.setUniform("u_color3", [ p.red(p.color(params.color3))/100, p.green(p.color(params.color3))/100, p.blue(p.color(params.color3))/100 ]);
+    theShader.setUniform("u_color2", [ p.red(p.color(params.textColor))/100, p.green(p.color(params.textColor))/100, p.blue(p.color(params.textColor))/100 ]);
+    //p.noStroke();
+    p.shader(theShader);
+    p.rect(p.width * -0.5, p.height * -0.5, p.width, p.height);
+
+    // CAPTURE
+    if (CanvasCapture.isRecording()) CanvasCapture.recordFrame();
+  }
+
+  // INIT CAPTURE SETTINGS AND BINDINGS
+  p.initCapture = () =>
+  {
     CanvasCapture.init(p.canvas, {
       showRecDot: true,
       showAlerts: true,
@@ -159,27 +223,6 @@ const sketch = ( p ) =>
     document.getElementById('MP4-support').innerHTML = `(browser supported: ${CanvasCapture.browserSupportsMP4()})`;
     document.getElementById('WEBM-support').innerHTML = `(browser supported: ${CanvasCapture.browserSupportsWEBM()})`;
   }
-
-  p.draw = () => 
-  {
-    var y = (p.mouseY-(displayHeight/intPixDensity)) / p.min(1, p.windowWidth / p.windowHeight) + (displayHeight/intPixDensity);
-    var py = (p.pmouseY-(displayHeight/intPixDensity)) / p.min(1, p.windowWidth / p.windowHeight) + (displayHeight/intPixDensity);
-    
-    theShader.setUniform("u_resolution", [p.width * intPixDensity, p.height * intPixDensity]);
-    theShader.setUniform("u_time", p.millis() / 500.0);
-    theShader.setUniform("u_offset", [-offset.x * intPixDensity, offset.y * intPixDensity]);
-    theShader.setUniform("u_zoom", 1.0 / zoom);
-    theShader.setUniform("u_mouse", [p.mouseX * intPixDensity, (p.height-y) * intPixDensity]);
-    theShader.setUniform("u_text", textGraphic);
-
-    //p.noStroke();
-    p.shader(theShader);
-    p.rect(p.width * -0.5, p.height * -0.5, p.width, p.height);
-
-    // CAPTURE
-    if (CanvasCapture.isRecording()) CanvasCapture.recordFrame();
-  }
-
 }
 
 let thep5 = new p5(sketch, 'wavy-sketch');
