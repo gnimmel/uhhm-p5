@@ -1,7 +1,6 @@
 const sketch = ( p ) => 
 {
   let theShader;
-  //let canvas;
   let f;
   let textGraphic;
 
@@ -35,9 +34,6 @@ const sketch = ( p ) =>
     textScaleMax: 1.8,
     textScaleStep: 0.001
   };
-
-  //let textTop = "ALLIGATOR"
-  //let textBtm = "BANGER"
 
   const { CanvasCapture } = CanvasCaptureLib;
 
