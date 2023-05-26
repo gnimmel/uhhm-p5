@@ -1,3 +1,16 @@
+var url = window.location.href;
+
+console.log("Current URL: " + url);
+
+var urlObj = new URL(url);
+var params = new URLSearchParams(urlObj.search);
+
+// Log all keys and their values
+for(let pair of params.entries()) {
+    console.log(pair[0]+ ', '+ pair[1]); 
+}
+
+
 const sketch = ( p ) => 
 {
   let theShader;
@@ -7,8 +20,8 @@ const sketch = ( p ) =>
   //let zoom = 1;
   let offset;
   let intPixDensity = 1;
-  let displayWidth = 880;
-  let displayHeight = 880;
+  let displayWidth = 1080;
+  let displayHeight = 1080;
 
   // GUI
   let gui;
@@ -64,7 +77,7 @@ const sketch = ( p ) =>
     //zoom = 0.15;
     offset.x = 50;
 
-    p.initCapture();
+    //p.initCapture();
 
     gui = p.createGui(p);
     gui.addObject(params);
@@ -95,7 +108,7 @@ const sketch = ( p ) =>
     p.rect(p.width * -0.5, p.height * -0.5, p.width, p.height);
 
     // CAPTURE
-    if (CanvasCapture.isRecording()) CanvasCapture.recordFrame();
+    //if (CanvasCapture.isRecording()) CanvasCapture.recordFrame();
   }
 
   // INIT CAPTURE SETTINGS AND BINDINGS
