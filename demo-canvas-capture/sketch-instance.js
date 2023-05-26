@@ -65,7 +65,7 @@ const sketch = ( p ) =>
     offset.x = 50;
 
     p.initCapture();
-    
+
     gui = p.createGui(p);
     gui.addObject(params);
     gui.setPosition((displayWidth + 50) * .5, 25);
@@ -223,8 +223,8 @@ const sketch = ( p ) =>
     });
     stopRecordJPGFrames.style.display = 'none';
 
-    document.getElementById('MP4-support').innerHTML = `(browser supported: ${CanvasCapture.browserSupportsMP4()})`;
-    document.getElementById('WEBM-support').innerHTML = `(browser supported: ${CanvasCapture.browserSupportsWEBM()})`;
+    //document.getElementById('MP4-support').innerHTML = `(browser supported: ${CanvasCapture.browserSupportsMP4()})`;
+    //document.getElementById('WEBM-support').innerHTML = `(browser supported: ${CanvasCapture.browserSupportsWEBM()})`;
   }
 }
 
