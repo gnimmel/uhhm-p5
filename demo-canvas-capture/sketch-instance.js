@@ -7,8 +7,8 @@ const sketch = ( p ) =>
   //let zoom = 1;
   let offset;
   let intPixDensity = 1;
-  let displayWidth = 1080;
-  let displayHeight = 1080;
+  let displayWidth = 880;
+  let displayHeight = 880;
 
   // GUI
   let gui;
@@ -118,7 +118,6 @@ const sketch = ( p ) =>
       onExportProgress: (progress) => console.log(`MP4 export progress: ${progress}.`),
       onExportFinish: () => {
         console.log(`Finished MP4 export.`);
-        p.initCapture();
     },
     };
     CanvasCapture.bindKeyToVideoRecord('v', MP4_OPTIONS);
