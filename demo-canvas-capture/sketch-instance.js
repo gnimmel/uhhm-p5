@@ -15,7 +15,7 @@ const sketch = ( p ) =>
   let params = {
     textTop: "TRAP",
     textBtm: "BANGER",
-    color1: [255, 0, 0],
+    color1: [255, 56, 56],
     color3: [0, 0, 255],
     
     speed: 0.7,
@@ -64,7 +64,7 @@ const sketch = ( p ) =>
     //zoom = 0.15;
     offset.x = 50;
 
-    p.initCapture()
+    p.initCapture();
     
     gui = p.createGui(p);
     gui.addObject(params);
@@ -116,7 +116,10 @@ const sketch = ( p ) =>
       quality: 1,
       fps: 30,
       onExportProgress: (progress) => console.log(`MP4 export progress: ${progress}.`),
-      onExportFinish: () => console.log(`Finished MP4 export.`),
+      onExportFinish: () => {
+        console.log(`Finished MP4 export.`);
+        p.initCapture();
+    },
     };
     CanvasCapture.bindKeyToVideoRecord('v', MP4_OPTIONS);
     const WEBM_OPTIONS = {
@@ -145,6 +148,10 @@ const sketch = ( p ) =>
     };
     CanvasCapture.bindKeyToJPEGFramesRecord('h', JPEG_OPTIONS);
 
+    const FFMPEGSERVER_OPTIONS = {
+      name: 'demo-canvas-capture-ffmpeg',
+    }
+    //CanvasCapture.bindKeyToVideoRecord
     const startRecordMP4 = document.getElementById('startMP4');
     let mp4Capture;
     startRecordMP4.addEventListener('click', (e) => {
