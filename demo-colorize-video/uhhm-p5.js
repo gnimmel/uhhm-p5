@@ -35,7 +35,8 @@ function setup() {
   gui = createGui('Colorize');
   gui.addObject(params);
   gui.setPosition((canvas.width + 25), 25);
-  
+  button = createButton("Play")
+  button.mousePressed(playVideo);
 }
 
 function draw() {
@@ -52,7 +53,7 @@ function draw() {
   blendMode(BLEND);
 }
 
-function mousePressed() {
+function playVideo() {
   video.loop(); // set the video to loop and start playing
 
   /*if (isPlaying) {
