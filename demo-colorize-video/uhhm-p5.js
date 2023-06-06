@@ -25,6 +25,8 @@ function setup() {
   video = createVideo('uhhm-td-fluid-h264.mp4'); // Converted to h264 with ffmpeg
   video.elt.setAttribute('playsinline', true);
   video.elt.setAttribute('autoplay', true);
+  video.elt.setAttribute('loop', true);
+  video.elt.setAttribute('nuted', true);
 
   video.volume(0);
   video.loop();
