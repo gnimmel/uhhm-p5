@@ -33,6 +33,7 @@ function setup() {
   gui = createGui('Colorize');
   gui.addObject(params);
   gui.setPosition((canvas.width + 25), 25);
+  
 }
 
 function draw() {
@@ -48,19 +49,19 @@ function draw() {
   // Reset the blend mode to normal
   blendMode(BLEND);
 }
-/*
-function mousePressed() {
-  //video.loop(); // set the video to loop and start playing
 
-  if (isPlaying) {
+function mousePressed() {
+  video.loop(); // set the video to loop and start playing
+
+  /*if (isPlaying) {
     video.pause();
     isPlaying = false;
   } else {
     video.play();
     isPlaying = true;
-  }
+  }*/
 }
-*/
+
 function getBlendMode(value) {
   switch(value) {
       case 'BLEND':
