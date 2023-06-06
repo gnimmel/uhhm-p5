@@ -17,7 +17,7 @@ function setup() {
   let canvas = createCanvas(540, 540);
   canvas.elt.setAttribute('playsinline', true);
   canvas.elt.setAttribute('autoplay', true);
-
+  
   // Attach the canvas to the div
   canvas.parent('canvas-container');
   
@@ -52,17 +52,17 @@ function draw() {
   blendMode(BLEND);
 }
 
-/*function mousePressed() {
+function mousePressed() {
   video.loop(); // set the video to loop and start playing
 
-  if (isPlaying) {
+  /*if (isPlaying) {
     video.pause();
     isPlaying = false;
   } else {
     video.play();
     isPlaying = true;
-  }
-}*/
+  }*/
+}
 
 function getBlendMode(value) {
   switch(value) {
