@@ -15,8 +15,7 @@ function setup() {
   
   // Create the canvas with the div's width and height
   let canvas = createCanvas(540, 540);
-  canvas.elt.setAttribute('playsinline', true);
-  canvas.elt.setAttribute('autoplay', true);
+  
   
   // Attach the canvas to the div
   canvas.parent('canvas-container');
@@ -24,6 +23,9 @@ function setup() {
   // Load the video
   //video = createVideo('uhhm-td-fluid.mov'); // Safari, but not Chrome
   video = createVideo('uhhm-td-fluid-h264.mp4'); // Converted to h264 with ffmpeg
+  video.elt.setAttribute('playsinline', true);
+  video.elt.setAttribute('autoplay', true);
+
   video.volume(0);
   video.loop();
   video.hide();
