@@ -6,7 +6,11 @@ let params = {
   color: [255, 0, 0],
   blendMode: ['OVERLAY', 'SOFT_LIGHT', 'LIGHTEST', 'SCREEN', 'ADD', 'DARKEST', 'DIFFERENCE', 'EXCLUSION', 'MULTIPLY', 'REPLACE', 'HARD_LIGHT', 'DODGE', 'BURN', 'BLEND']
 };
-//let blendMode = ['BLEND', 'ADD', 'DARKEST', 'LIGHTEST', 'DIFFERENCE', 'EXCLUSION', 'MULTIPLY', 'SCREEN', 'REPLACE', 'OVERLAY', 'HARD_LIGHT', 'SOFT_LIGHT', 'DODGE', 'BURN'];
+
+
+function preload() {
+  
+}
 
 function setup() {
   let canvasContainer = document.getElementById('canvas-container');
@@ -23,6 +27,8 @@ function setup() {
   // Load the video
   //video = createVideo('uhhm-td-fluid.mov'); // Safari, but not Chrome
   video = createVideo('uhhm-td-fluid-h264.mp4'); // Converted to h264 with ffmpeg
+  //video = createVideo('uhhm-td-flock-h264.mp4');
+
   video.elt.setAttribute('playsinline', true);
   video.elt.setAttribute('autoplay', true);
   video.elt.setAttribute('loop', true);
@@ -44,10 +50,15 @@ function setup() {
 }
 
 function draw() {
-  background(0);
+  background(220,220,220);
+  //blendMode(MULTIPLY);
+  //fill(220,220,220);
+  //rect(0, 0, width, height);
 
+  tint(255, 187);
   image(video, 0, 0, width, height);
-
+  //blendMode(BLEND);
+  
   blendMode(getBlendMode(params.blendMode));
 
   fill(params.color);
@@ -55,18 +66,11 @@ function draw() {
 
   // Reset the blend mode to normal
   blendMode(BLEND);
+  
 }
 
 function playVideo() {
   video.loop(); // set the video to loop and start playing
-
-  /*if (isPlaying) {
-    video.pause();
-    isPlaying = false;
-  } else {
-    video.play();
-    isPlaying = true;
-  }*/
 }
 
 function getBlendMode(value) {
